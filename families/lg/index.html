@@ -1,0 +1,494 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow">
+<meta name="theme-color" content="#2A7292">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="STAND">
+<title>STAND</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Averia+Sans+Libre:wght@400;700&display=swap">
+<style>
+:root {
+  --bg: #FFFFFF; --ink: #000000; --ink-soft: #3B4A50; --line: #D5DEE1; --card: #FFFFFF;
+  --brand: #2A7292; --forest: #0B6434; --plum: #6F4063; --amber: #A16308;
+  --on-accent: #FFFFFF; --focus: #2A7292;
+  --font-display: "Averia Sans Libre", Arial, sans-serif;
+  --font-body: Arial, "Helvetica Neue", Helvetica, sans-serif;
+  --r-md: 14px; --r-pill: 999px;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #000000; --ink: #FFFFFF; --ink-soft: #C9D3D6; --line: #2C3436; --card: #000000;
+    --brand: #6997A3; --forest: #7F9B8C; --plum: #AC94A6; --amber: #E7CDA5;
+    --on-accent: #000000; --focus: #6997A3; color-scheme: dark;
+  }
+}
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--bg); color: var(--ink); font-family: var(--font-body); font-size: 17px; line-height: 1.5; }
+.wrap { max-width: 560px; margin: 0 auto; padding-block: 28px 48px; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); display: grid; gap: 28px; }
+h1, h2 { font-family: var(--font-display); font-weight: 700; margin: 0; text-wrap: balance; }
+.top { display: grid; gap: 6px; }
+.eyebrow { font-size: 14px; color: var(--ink-soft); margin: 0; }
+h1 { font-size: 34px; line-height: 1.15; color: var(--brand); }
+.intro { margin: 4px 0 0; font-size: 18px; }
+.updated { font-size: 14px; color: var(--ink-soft); margin: 0; }
+.tiles { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.tile { --c: var(--brand); text-align: left; font: inherit; color: var(--ink); background: var(--card); border: 2px solid var(--line); border-radius: var(--r-md); padding: 14px 14px 16px; display: grid; gap: 6px; cursor: pointer; min-height: 112px; align-content: start; }
+.tile:hover { border-color: var(--c); }
+.tile[aria-pressed="true"] { background: var(--c); border-color: var(--c); color: var(--on-accent); }
+.tile .icon { width: 26px; height: 26px; color: var(--c); }
+.tile[aria-pressed="true"] .icon { color: var(--on-accent); }
+.tile .n { font-family: var(--font-display); font-weight: 700; font-size: 30px; line-height: 1; font-variant-numeric: tabular-nums; }
+.tile .label { font-size: 15px; line-height: 1.3; font-weight: 700; }
+.t-coming { --c: var(--brand); } .t-stand { --c: var(--forest); } .t-you { --c: var(--plum); } .t-done { --c: var(--amber); }
+.panel { display: grid; gap: 12px; }
+.panel h2 { font-size: 24px; color: var(--c, var(--brand)); }
+.panel .sub { margin: -6px 0 0; color: var(--ink-soft); font-size: 15px; }
+.list { list-style: none; margin: 0; padding: 0; display: grid; gap: 10px; }
+.item { border: 1px solid var(--line); border-radius: var(--r-md); background: var(--card); }
+.item > button { width: 100%; text-align: left; font: inherit; color: inherit; background: none; border: 0; padding: 14px 16px; display: grid; grid-template-columns: 1fr auto; gap: 4px 12px; cursor: pointer; border-radius: var(--r-md); }
+.item > div.static { padding: 14px 16px; display: grid; gap: 4px; }
+.item .what { font-weight: 700; min-width: 0; }
+.item .when { font-size: 15px; color: var(--ink-soft); grid-column: 1; }
+.item .chev { grid-column: 2; grid-row: 1 / span 2; align-self: center; width: 22px; height: 22px; color: var(--ink-soft); transition: transform .2s; }
+.item[data-open="true"] .chev { transform: rotate(180deg); }
+.chip { display: inline-flex; align-items: center; gap: 6px; font-size: 14px; font-weight: 700; border: 1.5px solid currentColor; border-radius: var(--r-pill); padding: 2px 10px; width: fit-content; grid-column: 1; }
+.chip svg { width: 14px; height: 14px; }
+.chip.working { color: var(--forest); } .chip.waiting { color: var(--plum); } .chip.notyet { color: var(--brand); } .chip.done { color: var(--amber); }
+.detail { padding: 0 16px 16px; display: grid; gap: 8px; }
+.detail p { margin: 0; }
+.detail .where { font-size: 15px; color: var(--ink-soft); }
+.detail a { color: var(--brand); font-weight: 700; }
+.howto { border-left: 4px solid var(--plum); padding: 4px 0 4px 14px; display: grid; gap: 6px; }
+.howto h3 { font-family: var(--font-display); font-size: 18px; margin: 0; color: var(--plum); }
+.howto ol { margin: 0; padding-left: 22px; display: grid; gap: 6px; }
+.donehint { font-size: 15px; color: var(--ink-soft); }
+.cheer { margin: 0; border: 2px solid var(--amber); border-radius: var(--r-md); padding: 12px 16px; font-weight: 700; display: flex; gap: 10px; align-items: center; }
+.cheer svg { width: 22px; height: 22px; color: var(--amber); flex: none; }
+.chip.you { color: var(--plum); }
+.praise { font-weight: 700; color: var(--amber); }
+.history { display: grid; gap: 14px; }
+.history h2 { font-size: 24px; color: var(--brand); }
+.history .sub { margin: -8px 0 0; color: var(--ink-soft); font-size: 15px; }
+.timeline { list-style: none; margin: 0; padding: 0 0 0 18px; border-left: 2px solid var(--line); display: grid; gap: 16px; }
+.timeline li { position: relative; display: grid; gap: 2px; }
+.timeline li::before { content: ""; position: absolute; left: -25px; top: 6px; width: 12px; height: 12px; border-radius: 50%; background: var(--bg); border: 2px solid var(--brand); }
+.timeline li.mine::before { background: var(--plum); border-color: var(--plum); }
+.timeline .date { font-size: 14px; color: var(--ink-soft); font-variant-numeric: tabular-nums; }
+.timeline .what { font-weight: 700; }
+.timeline .more { margin: 0; font-size: 15px; }
+.timeline .mine-tag { font-size: 13px; font-weight: 700; color: var(--plum); }
+.btn-link { font: inherit; font-size: 15px; font-weight: 700; color: var(--brand); background: transparent; border: 2px solid var(--brand); border-radius: var(--r-pill); padding: 6px 16px; cursor: pointer; width: fit-content; }
+.empty { border: 1px solid var(--line); border-radius: var(--r-md); padding: 16px; color: var(--ink-soft); margin: 0; }
+.contact { border-top: 2px solid var(--brand); padding-top: 18px; display: grid; gap: 10px; }
+.contact h2 { font-size: 22px; color: var(--brand); }
+.contact p { margin: 0; overflow-wrap: anywhere; }
+.notice { border: 2px solid var(--brand); border-radius: var(--r-md); padding: 18px; display: grid; gap: 8px; }
+.notice p { margin: 0; }
+button:focus-visible, a:focus-visible { outline: 3px solid var(--focus); outline-offset: 2px; }
+@media (max-width: 360px) { .tiles { grid-template-columns: 1fr; } }
+@media (prefers-reduced-motion: reduce) { .item .chev { transition: none; } }
+.urgency { display: inline-flex; align-items: center; gap: 6px; font-size: 14px; font-weight: 700; color: var(--plum); grid-column: 1; }
+.urgency svg { width: 14px; height: 14px; }
+.start { display: inline-block; font-size: 12px; font-weight: 700; color: var(--on-accent); background: var(--plum); border-radius: var(--r-pill); padding: 1px 9px; margin-right: 8px; vertical-align: 2px; }
+.tick { font: inherit; font-size: 16px; font-weight: 700; color: var(--on-accent); background: var(--plum); border: 2px solid var(--plum); border-radius: var(--r-pill); padding: 10px 18px; cursor: pointer; width: fit-content; display: inline-flex; gap: 8px; align-items: center; }
+.tick svg { width: 18px; height: 18px; }
+.welldone { border: 2px solid var(--amber); border-radius: var(--r-md); padding: 16px; display: grid; gap: 8px; }
+.welldone h3 { font-family: var(--font-display); font-size: 22px; margin: 0; color: var(--amber); }
+.welldone p { margin: 0; }
+.undo { font: inherit; font-size: 15px; color: var(--ink-soft); background: none; border: 0; padding: 0; text-decoration: underline; cursor: pointer; width: fit-content; }
+.support { display: grid; gap: 14px; }
+.support h2 { font-size: 22px; color: var(--brand); }
+.support .sub { margin: -8px 0 0; color: var(--ink-soft); font-size: 15px; }
+.support dl { margin: 0; display: grid; gap: 12px; }
+.support dt { font-weight: 700; font-size: 15px; color: var(--forest); }
+.support dd { margin: 0; display: grid; gap: 6px; }
+.support .org { display: grid; gap: 0; }
+.support .org a { color: var(--brand); font-weight: 700; }
+.support .org span { font-size: 15px; color: var(--ink-soft); }
+.foot { border-top: 2px solid var(--line); padding-top: 18px; display: grid; gap: 6px; }
+.foot .tags { font-family: var(--font-display); font-weight: 700; font-size: 20px; margin: 0; display: flex; flex-wrap: wrap; gap: 4px 12px; }
+.foot .tags span:nth-child(1) { color: var(--forest); } .foot .tags span:nth-child(2) { color: var(--amber); } .foot .tags span:nth-child(3) { color: var(--plum); }
+.foot p { margin: 0; font-size: 15px; color: var(--ink-soft); }
+.foot a { color: var(--brand); font-weight: 700; }
+.gate { display: grid; gap: 10px; max-width: 320px; }
+.gate label { font-weight: 700; }
+.gate input { font: inherit; font-size: 28px; letter-spacing: 0.3em; padding: 10px 14px; border: 2px solid var(--line); border-radius: 10px; background: var(--card); color: var(--ink); width: 100%; font-variant-numeric: tabular-nums; }
+.gate input:focus { outline: 3px solid var(--focus); outline-offset: 2px; border-color: var(--brand); }
+.gate-msg { margin: 0; font-weight: 700; color: var(--plum); }
+</style>
+</head>
+<body>
+<main class="wrap" id="app"></main>
+<script>
+
+const ICONS = {
+  coming: '<path d="M7 3v3M17 3v3M4 9h16M5 5h14a1 1 0 0 1 1 1v13a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1Z"/>',
+  stand: '<path d="M8 11a3 3 0 1 0 0-6 3 3 0 0 0 0 6Zm8 0a3 3 0 1 0 0-6 3 3 0 0 0 0 6ZM3 20c0-3 2.2-5 5-5s5 2 5 5M11 20c0-3 2.2-5 5-5s5 2 5 5"/>',
+  you: '<path d="M4 6h16v12H4zM4 7l8 6 8-6"/>',
+  done: '<path d="M5 12.5 10 17l9-10"/>',
+  chev: '<path d="m6 9 6 6 6-6"/>',
+  working: '<path d="M12 6v6l4 2"/><circle cx="12" cy="12" r="8"/>',
+  waiting: '<path d="M7 4h10M7 20h10M8 4c0 5 8 5 8 8s-8 3-8 8M16 4c0 5-8 5-8 8s8 3 8 8"/>',
+  notyet: '<circle cx="12" cy="12" r="8"/>',
+  clock: '<circle cx="12" cy="12" r="8"/><path d="M12 8v4l3 2"/>'
+};
+const svg = (d, cls) => '<svg class="' + (cls || '') + '" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' + d + '</svg>';
+
+const META = [
+  { id: 'coming', cls: 't-coming', label: 'Coming up', title: 'Coming up', sub: 'Meetings and dates to know about.', empty: 'Nothing booked right now.' },
+  { id: 'stand', cls: 't-stand', label: 'What STAND is doing', title: 'What STAND is doing for you', sub: "Things we're following up on your behalf.", empty: 'Nothing open right now.' },
+  { id: 'you', cls: 't-you', label: 'What we need from you', title: 'Anything we need from you', sub: "Every one of these helps us push for the right support. Start at the top, and tap one to see how. Message us if you're stuck.", empty: "Nothing right now. You're all caught up. We'll let you know if that changes." },
+  { id: 'done', cls: 't-done', label: 'Done recently', title: 'Done recently', sub: "From the last two weeks. Look at what's been sorted.", empty: 'Nothing finished in the last two weeks.' }
+];
+
+// Places that can help, from the Helpful Contacts page on standuk.co.uk.
+const SUPPORT = [
+  { group: 'School and additional support', orgs: [
+    { name: 'Enquire', note: 'Advice on additional support for learning. 0345 123 2303', url: 'https://enquire.org.uk' },
+    { name: "Barnardo's Let's Talk ASN", note: 'Help if you disagree with the school about support. 0131 446 7000', url: 'https://www.barnardos.org.uk/what-we-do/services/lets-talk-asn-scotland' },
+    { name: 'Govan Law Centre Education Law Unit', note: 'Template letters and legal advice. 0800 043 0306', url: 'https://govanlawcentre.org/education-law-unit' }
+  ]},
+  { group: 'Someone to speak up with you', orgs: [
+    { name: 'Kindred', note: 'Advocacy for families of children with additional needs', url: 'https://www.kindred-scotland.org' },
+    { name: 'Find an independent advocate', note: 'Scottish Independent Advocacy Alliance', url: 'https://www.siaa.org.uk/find-an-advocate' }
+  ]},
+  { group: 'Money and benefits', orgs: [
+    { name: 'Citizens Advice Scotland', note: 'Help to Claim helpline 0800 023 2581', url: 'https://www.citizensadvice.org.uk' }
+  ]},
+  { group: 'Health and complaints', orgs: [
+    { name: 'Patient Advice and Support Service', note: 'Your rights as an NHS patient, and help with complaints. 0800 917 2127', url: 'https://www.cas.org.uk/pass' },
+    { name: 'Scottish Public Services Ombudsman', note: 'If a complaint to a public body has not been put right', url: 'https://www.spso.org.uk' }
+  ]},
+  { group: 'From STAND', orgs: [
+    { name: 'Parent and carer WhatsApp groups', note: 'Email emma@standuk.co.uk to join', url: '' },
+    { name: 'More helpful contacts', note: 'The full list on our website', url: 'https://www.standuk.co.uk/useful-information/helpful-contacts' }
+  ]}
+];
+
+function statusOf(text) {
+  const t = (text || '').toLowerCase();
+  if (t.indexOf('working') > -1) return ['working', text];
+  if (t.indexOf('waiting') > -1) return ['waiting', text];
+  if (t.indexOf('not started') > -1) return ['notyet', text];
+  return null;
+}
+function el(tag, cls, text) { const e = document.createElement(tag); if (cls) e.className = cls; if (text != null) e.textContent = text; return e; }
+
+// Turns "By 17 Nov" into a gentle label rather than a deadline.
+const MONTHS = ['jan','feb','mar','apr','may','jun','jul','aug','sep','oct','nov','dec'];
+function daysUntil(text) {
+  const m = /(\d{1,2})\s+([A-Za-z]{3})/.exec(text || '');
+  if (!m) return null;
+  const mon = MONTHS.indexOf(m[2].toLowerCase());
+  if (mon < 0) return null;
+  const now = new Date(); now.setHours(0, 0, 0, 0);
+  let d = new Date(now.getFullYear(), mon, +m[1]);
+  if (d - now < -180 * 864e5) d = new Date(now.getFullYear() + 1, mon, +m[1]);
+  return Math.round((d - now) / 864e5);
+}
+function gentle(text) {
+  const n = daysUntil(text);
+  if (n == null) return 'When you can';
+  if (n <= 3) return 'Soon, if you can';
+  if (n <= 7) return 'This week';
+  if (n <= 14) return 'In the next couple of weeks';
+  return 'No rush';
+}
+
+// The page talks to STAND's Google Apps Script in the background. No Google cookies are sent,
+// so it works the same whichever Google accounts are signed in on the phone.
+const API = 'https://script.google.com/macros/s/AKfycbzwkXsxecttvUkYVQPaCI26_JDfrLGVl44yJcOn2ftuAYzXUm7F9ODbPo32Vc5FUezS/exec';
+function call(body) {
+  return fetch(API, { method: 'POST', body: JSON.stringify(body), credentials: 'omit', redirect: 'follow' })
+    .then(r => { if (!r.ok) throw new Error('HTTP ' + r.status); return r.json(); });
+}
+const app = document.getElementById('app');
+const KEY = 'stand-family-code';
+let CODE = null;
+function stored() { try { return localStorage.getItem(KEY); } catch (e) { return null; } }
+function remember(c) { try { localStorage.setItem(KEY, c); } catch (e) {} }
+function forget() { try { localStorage.removeItem(KEY); } catch (e) {} }
+const MESSAGES = {
+  wrong: "That code didn't match. Check the code from STAND and try again.",
+  locked: "Too many tries for now. Please wait an hour, or message Dani and we'll help.",
+  error: "Something went wrong opening your page. Message Dani and we'll sort it.",
+  offline: "We couldn't open your page just now. Check your signal and try again."
+};
+
+function showLoading() {
+  app.innerHTML = '';
+  const top = el('header', 'top');
+  top.append(el('p', 'eyebrow', 'Your support from STAND'), el('p', 'intro', 'Opening your page...'));
+  app.append(top);
+}
+
+function showGate(reason) {
+  app.innerHTML = '';
+  const top = el('header', 'top');
+  top.append(el('p', 'eyebrow', 'Your support from STAND'), el('h1', null, 'Welcome'));
+  top.append(el('p', 'intro', "Enter the 6-digit code STAND gave you. You'll only need to do this once on this phone."));
+  const form = el('form', 'gate'); form.id = 'gate';
+  const label = el('label', null, 'Your code'); label.htmlFor = 'code';
+  const input = el('input'); input.id = 'code'; input.inputMode = 'numeric'; input.autocomplete = 'one-time-code'; input.maxLength = 6; input.pattern = '[0-9]*';
+  const btn = el('button', 'tick', 'Open my page'); btn.type = 'submit';
+  form.append(label, input);
+  if (reason) { const m = el('p', 'gate-msg', MESSAGES[reason] || MESSAGES.error); m.setAttribute('role', 'alert'); form.append(m); }
+  form.append(btn);
+  form.addEventListener('submit', ev => { ev.preventDefault(); const c = input.value.replace(/\D/g, ''); if (c.length === 6) tryCode(c, false); else showGate('wrong'); });
+  const foot = el('p', 'donehint', "Don't have a code? Message Dani and we'll send it.");
+  app.append(top, form, foot);
+  input.focus();
+}
+
+function tryCode(c, fromMemory) {
+  showLoading();
+  call({ action: 'getPage', code: c })
+    .then(res => {
+      if (res && res.ok) { CODE = c; remember(c); app.innerHTML = ''; start(res.data); }
+      else { if (fromMemory) forget(); showGate(fromMemory && res && res.reason === 'wrong' ? null : (res && res.reason)); }
+    })
+    .catch(() => showGate('offline'));
+}
+
+function start(DATA) {
+
+if (DATA.noAccess) {
+  const n = el('section', 'notice');
+  n.append(el('h2', null, 'This page is not open to you yet'));
+  n.append(el('p', null, "You might be signed in with a different Google account from the one STAND shared this with. Try switching account, or get in touch with STAND and we'll sort it out."));
+  app.append(n);
+} else {
+  let active = 'coming';
+  const open = new Set();
+  const ticks = DATA.ticks || {};
+  let justDone = null;
+  let showAllYou = false;
+
+  const top = el('header', 'top');
+  top.append(el('p', 'eyebrow', 'Your support from STAND'));
+  top.append(el('h1', null, (DATA.title || 'STAND').replace(/^STAND\s*[–-]\s*/, '')));
+  top.append(el('p', 'intro', "Here's where things are. Tap a box to see the details."));
+  top.append(el('p', 'updated', DATA.updated || ''));
+  const cheerSlot = el('div'); top.append(cheerSlot);
+  const tiles = el('nav', 'tiles'); tiles.setAttribute('aria-label', 'Sections');
+  const panel = el('section', 'panel'); panel.setAttribute('aria-live', 'polite');
+  const history = el('section', 'history'); history.id = 'history';
+  const contact = el('section', 'contact');
+  contact.append(el('h2', null, 'Need to talk to us?'));
+  contact.append(el('p', null, DATA.contact || 'Get in touch with STAND any time.'));
+  const support = el('section', 'support');
+  const foot = el('footer', 'foot');
+  app.append(top, tiles, panel, history, contact, support, foot);
+
+  const isYou = it => (it.who || '').toLowerCase() === 'you';
+  const sheetItems = id => (DATA.sections && DATA.sections[id]) || [];
+  // Things she has ticked off herself, newest first, from the last 14 days.
+  function tickedList() {
+    const cutoff = Date.now() - 14 * 864e5;
+    return Object.keys(ticks).map(k => ({ what: k, at: ticks[k] }))
+      .filter(t => new Date(t.at).getTime() > cutoff)
+      .sort((a, b) => new Date(b.at) - new Date(a.at))
+      .map(t => ({ what: t.what, when: new Date(t.at).toLocaleDateString('en-GB', { day: 'numeric', month: 'short' }), who: 'You', ticked: true }));
+  }
+  function items(id) {
+    if (id === 'you') return sheetItems('you').filter(it => !ticks[it.what]);
+    if (id === 'done') {
+      const fromSheet = sheetItems('done').filter(it => !ticks[it.what]);
+      return tickedList().concat(fromSheet);
+    }
+    return sheetItems(id);
+  }
+
+  function renderCheer() {
+    cheerSlot.innerHTML = '';
+    const n = items('done').filter(isYou).length;
+    if (!n) return;
+    const cheer = el('p', 'cheer');
+    cheer.innerHTML = svg(ICONS.done);
+    cheer.append(n === 1 ? "You've ticked something off recently. Thank you, it really helps." : "You've ticked off " + n + " things recently. That's brilliant, thank you.");
+    cheerSlot.append(cheer);
+  }
+
+  const PRAISE = ["You did this. Thank you, it makes a real difference.", "That's done, and it was you. Well done.", "Sorted, thanks to you. Brilliant."];
+  const WELL_DONE = ["Brilliant, well done!", "That's one less thing. Well done!", "Nice one, thank you!"];
+
+  function save(fn, what) {
+    call({ action: fn, code: CODE, what: what }).catch(() => {});
+  }
+  function tickOff(it) {
+    ticks[it.what] = new Date().toISOString();
+    justDone = it.what;
+    open.clear();
+    save('tickItem', it.what);
+    renderAll();
+    const w = document.getElementById('welldone'); if (w) w.focus();
+  }
+  function undoTick(what) {
+    delete ticks[what];
+    justDone = null;
+    save('untickItem', what);
+    renderAll();
+  }
+
+  function renderTiles() {
+    tiles.innerHTML = '';
+    META.forEach(s => {
+      const b = el('button', 'tile ' + s.cls); b.type = 'button'; b.id = 'tile-' + s.id;
+      b.setAttribute('aria-pressed', String(s.id === active));
+      b.innerHTML = svg(ICONS[s.id], 'icon');
+      b.append(el('span', 'n', String(items(s.id).length)), el('span', 'label', s.label));
+      b.addEventListener('click', () => { active = s.id; justDone = null; renderTiles(); renderPanel(); });
+      tiles.append(b);
+    });
+  }
+
+  function renderPanel() {
+    const s = META.find(x => x.id === active);
+    panel.style.setProperty('--c', getComputedStyle(document.getElementById('tile-' + s.id)).getPropertyValue('--c'));
+    panel.innerHTML = '';
+    panel.append(el('h2', null, s.title), el('p', 'sub', s.sub));
+
+    if (s.id === 'you' && justDone) {
+      const w = el('div', 'welldone'); w.id = 'welldone'; w.tabIndex = -1;
+      w.append(el('h3', null, WELL_DONE[Object.keys(ticks).length % WELL_DONE.length]));
+      w.append(el('p', null, "That's ticked off and moved to Done recently. Drop Dani a quick message to say it's done, so we can pick it up from here."));
+      const u = el('button', 'undo', 'Undo, I haven’t done this yet'.replace('’', "'"));
+      u.type = 'button'; const what = justDone;
+      u.addEventListener('click', () => undoTick(what));
+      w.append(u);
+      panel.append(w);
+    }
+
+    let list = items(s.id);
+    if (!list.length) { panel.append(el('p', 'empty', s.empty)); return; }
+    const total = list.length;
+    if (s.id === 'you' && !showAllYou) list = list.slice(0, 3);
+    const ul = el('ul', 'list');
+    list.forEach((it, i) => {
+      const key = s.id + i, isOpen = open.has(key);
+      const where = s.id === 'coming' ? it.extra : '';
+      const link = /^https?:\/\//.test(it.extra || '') ? it.extra : '';
+      const status = s.id === 'stand' ? statusOf(it.extra) : (s.id === 'done' ? (isYou(it) ? ['you', 'You did this'] : ['done', 'Done']) : null);
+      const steps = (it.howto || '').split(/\n+/).map(x => x.replace(/^\s*(\d+[.)]|[-•])\s*/, '').trim()).filter(Boolean);
+      const hasMore = s.id === 'you' || !!(it.detail || where || link || steps.length);
+      const li = el('li', 'item'); li.dataset.open = String(isOpen);
+      const head = hasMore ? el('button') : el('div', 'static');
+      if (hasMore) { head.type = 'button'; head.id = 'item-' + key; head.setAttribute('aria-expanded', String(isOpen)); }
+      const what = el('span', 'what');
+      if (s.id === 'you' && i === 0) what.append(el('span', 'start', 'Start here'));
+      what.append(it.what);
+      head.append(what);
+      if (hasMore) head.insertAdjacentHTML('beforeend', svg(ICONS.chev, 'chev'));
+      if (s.id === 'you') {
+        const u = el('span', 'urgency'); u.innerHTML = svg(ICONS.clock); u.append(gentle(it.when) + (it.when ? '  ·  aim for ' + it.when.replace(/^By\s+/i, '') : ''));
+        head.append(u);
+      } else if (it.when) {
+        head.append(el('span', 'when', (s.id === 'done' ? 'Done ' : '') + it.when));
+      }
+      if (status) { const c = el('span', 'chip ' + status[0]); c.innerHTML = svg(ICONS[(status[0] === 'done' || status[0] === 'you') ? 'done' : status[0]]); c.append(status[1]); head.append(c); }
+      if (hasMore) head.addEventListener('click', () => { isOpen ? open.delete(key) : open.add(key); justDone = null; renderPanel(); const f = document.getElementById('item-' + key); if (f) f.focus(); });
+      li.append(head);
+      if (hasMore && isOpen) {
+        const d = el('div', 'detail');
+        if (it.detail) d.append(el('p', null, it.detail));
+        if (s.id === 'done' && isYou(it)) d.append(el('p', 'praise', PRAISE[i % PRAISE.length]));
+        if (where) d.append(el('p', 'where', 'Where: ' + where));
+        if (steps.length) {
+          const box = el('div', 'howto');
+          box.append(el('h3', null, 'How to do it'));
+          const ol = el('ol');
+          steps.forEach(st => ol.append(el('li', null, st)));
+          box.append(ol);
+          d.append(box);
+        }
+        if (link) { const a = el('a', null, 'Open the document'); a.href = link; a.target = '_blank'; a.rel = 'noopener'; const p = el('p'); p.append(a); d.append(p); }
+        if (s.id === 'you') {
+          const t = el('button', 'tick'); t.type = 'button'; t.id = 'tick-' + key;
+          t.innerHTML = svg(ICONS.done); t.append("I've done this");
+          t.addEventListener('click', () => tickOff(it));
+          d.append(t);
+          d.append(el('p', 'donehint', "Stuck? Just message us and we'll help."));
+        }
+        li.append(d);
+      }
+      ul.append(li);
+    });
+    panel.append(ul);
+    if (s.id === 'you' && total > 3) {
+      const b = el('button', 'btn-link', showAllYou ? 'Show fewer' : 'See ' + (total - 3) + ' more, when you’re ready'.replace('’', "'"));
+      b.type = 'button'; b.id = 'you-more';
+      b.addEventListener('click', () => { showAllYou = !showAllYou; renderPanel(); document.getElementById('you-more').focus(); });
+      panel.append(b);
+    }
+  }
+
+  let showAll = false;
+  function renderHistory() {
+    const list = sheetItems('history');
+    history.innerHTML = '';
+    if (!list.length) return;
+    history.append(el('h2', null, "What's happened so far"), el('p', 'sub', 'The story so far, newest first. The purple dots are things you did.'));
+    const ol = el('ol', 'timeline');
+    (showAll ? list : list.slice(0, 6)).forEach(it => {
+      const li = el('li', isYou(it) ? 'mine' : '');
+      li.append(el('span', 'date', it.when || ''), el('span', 'what', it.what));
+      if (it.detail) li.append(el('p', 'more', it.detail));
+      if (isYou(it)) li.append(el('span', 'mine-tag', 'You did this'));
+      ol.append(li);
+    });
+    history.append(ol);
+    if (list.length > 6) {
+      const b = el('button', 'btn-link', showAll ? 'Show less' : 'Show everything (' + list.length + ')');
+      b.type = 'button'; b.id = 'history-toggle';
+      b.addEventListener('click', () => { showAll = !showAll; renderHistory(); document.getElementById('history-toggle').focus(); });
+      history.append(b);
+    }
+  }
+
+  function renderSupport() {
+    support.innerHTML = '';
+    support.append(el('h2', null, 'Other places that can help'), el('p', 'sub', 'Free and independent. Tap a name to visit their website.'));
+    const dl = el('dl');
+    SUPPORT.forEach(g => {
+      dl.append(el('dt', null, g.group));
+      const dd = el('dd');
+      g.orgs.forEach(o => {
+        const div = el('div', 'org');
+        if (o.url) { const a = el('a', null, o.name); a.href = o.url; a.target = '_blank'; a.rel = 'noopener'; div.append(a); }
+        else div.append(el('strong', null, o.name));
+        div.append(el('span', null, o.note));
+        dd.append(div);
+      });
+      dl.append(dd);
+    });
+    support.append(dl);
+  }
+
+  function renderFoot() {
+    foot.innerHTML = '';
+    const tags = el('p', 'tags');
+    ['#inclusion', '#support', '#empowerment'].forEach(t => tags.append(el('span', null, t)));
+    foot.append(tags);
+    foot.append(el('p', null, 'STAND exists to make Scotland a place where neurodivergent children, their families and their carers thrive. We are stronger together.'));
+    const p = el('p'); const a = el('a', null, 'standuk.co.uk'); a.href = 'https://www.standuk.co.uk'; a.target = '_blank'; a.rel = 'noopener';
+    p.append(a, ' · Stronger Together for Autism and Neurodivergence SCIO, SC052228');
+    foot.append(p);
+  }
+
+  function renderAll() { renderCheer(); renderTiles(); renderPanel(); }
+  renderAll(); renderHistory(); renderSupport(); renderFoot();
+}
+}
+
+(function boot() {
+  const s = stored();
+  if (s) tryCode(s, true); else showGate(null);
+})();
+</script>
+</body>
+</html>
