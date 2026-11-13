@@ -357,7 +357,7 @@ if (DATA.noAccess) {
       const w = el('div', 'welldone'); w.id = 'welldone'; w.tabIndex = -1;
       w.append(el('h3', null, WELL_DONE[Object.keys(ticks).length % WELL_DONE.length]));
       w.append(el('p', null, "That's ticked off and moved to Done recently. Drop Dani a quick message to say it's done, so we can pick it up from here."));
-      const u = el('button', 'undo', 'Undo, I haven’t done this yet'.replace('’', "'"));
+      const u = el('button', 'btn-link', 'Undo, I haven’t done this yet'.replace('’', "'"));
       u.type = 'button'; const what = justDone;
       u.addEventListener('click', () => undoTick(what));
       w.append(u);
@@ -375,7 +375,7 @@ if (DATA.noAccess) {
       const link = /^https?:\/\//.test(it.extra || '') ? it.extra : '';
       const status = s.id === 'stand' ? statusOf(it.extra) : (s.id === 'done' ? (isYou(it) ? ['you', 'You did this'] : ['done', 'Done']) : null);
       const steps = (it.howto || '').split(/\n+/).map(x => x.replace(/^\s*(\d+[.)]|[-•])\s*/, '').trim()).filter(Boolean);
-      const hasMore = s.id === 'you' || !!(it.detail || where || link || steps.length);
+      const hasMore = s.id === 'you' || !!it.ticked || !!(it.detail || where || link || steps.length);
       const li = el('li', 'item'); li.dataset.open = String(isOpen);
       const head = hasMore ? el('button') : el('div', 'static');
       if (hasMore) { head.type = 'button'; head.id = 'item-' + key; head.setAttribute('aria-expanded', String(isOpen)); }
@@ -397,6 +397,7 @@ if (DATA.noAccess) {
         const d = el('div', 'detail');
         if (it.detail) d.append(el('p', null, it.detail));
         if (s.id === 'done' && isYou(it)) d.append(el('p', 'praise', PRAISE[i % PRAISE.length]));
+        if (it.ticked) { const ub = el('button', 'btn-link', "Undo, I haven't done this yet"); ub.type = 'button'; ub.addEventListener('click', () => undoTick(it.what)); d.append(ub); d.append(el('p', 'donehint', 'Ticked this by mistake? Tap undo and it goes back on your list.')); }
         if (where) d.append(el('p', 'where', 'Where: ' + where));
         if (steps.length) {
           const box = el('div', 'howto');
