@@ -120,6 +120,15 @@ const JARGON = [
     say: "The UN Convention on the Rights of the Child. It's now part of Scots law, so public bodies must respect children's rights, including your child's right to have their views heard." },
   { term: 'Tribunal', match: /\btribunal\b/i,
     say: "An independent panel that can decide some disagreements about additional support for learning, such as Coordinated Support Plans, some placing requests and disability discrimination at school." },
+  { term: 'Education Resource Group', aka: 'ERG', match: /\bEducation Resource Group\b|\bERGs?\b/,
+    say: "East Lothian Council's Education Resource Group. It looks at referrals for children who may need extra support or a place in a specialist provision, using information from school, health and families. There's also an Early Years ERG for younger children.",
+    more: "A formal placing request is separate from the ERG: the council has to give you its decision in writing, and you can appeal if it says no." },
+  { term: 'Specialist provision', match: /\bspecialist provisions?\b/i,
+    say: "A class or base for children with additional support needs, usually attached to a mainstream school, with smaller groups and more adult support." },
+  { term: 'Wellbeing assessment', match: /\bwellbeing assessments?\b/i,
+    say: "A look at how your child is doing across the eight wellbeing indicators, so everyone agrees what support is needed. It's part of GIRFEC." },
+  { term: 'Catchment school', match: /\bcatchment\b/i,
+    say: "The local school for your address." },
   { term: 'Authority to act', match: /\bauthority to act\b|\bconsent form\b/i,
     say: "A form you sign so STAND can speak to the school, council or NHS for you. You can change your mind at any time." }
 ];
